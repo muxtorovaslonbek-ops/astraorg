@@ -40,7 +40,7 @@ export function StarField() {
   const drawMeteors=(dt:number)=>{
    if(!reduced&&Math.random()<dt*.35)spawn();
    for(let i=meteors.length-1;i>=0;i--){
-    const m=meteors[i];
+    const m=meteors[i];if(!m)continue;
     m.x+=m.vx*dt;m.y+=m.vy*dt;m.life+=dt;
     const fade=Math.min(1,m.life/8)*Math.max(0,1-m.life/m.max);
     if(fade<=0||m.x<-160||m.y>height+160||m.x>width+160){meteors.splice(i,1);continue;}

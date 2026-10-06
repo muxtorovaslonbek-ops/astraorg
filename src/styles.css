@@ -14,3 +14,33 @@
 @media(max-width:1050px){.right-rail{display:none}.home-layout{display:block}.hero{height:350px}.hero-copy{width:60%;padding:32px}.hero h2{font-size:38px}.hero-copy p{font-size:11px}.subject-image{height:145px}.subject-card h3{font-size:13px}.subject-card p{font-size:10px}.subject-card-body{padding:13px}.catalog-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.footer-motto{display:none}.catalog-grid .subject-image{height:145px}.catalog-grid .subject-card h3{font-size:14px}}
 @media(max-width:760px){.sidebar{transform:translateX(-100%);transition:transform .25s;width:205px;background:var(--background);padding-top:26px}.sidebar-open{transform:translateX(0);box-shadow:var(--shadow-overlay)}.app-content{margin-left:0}.mobile-menu{display:inline-flex;flex-shrink:0}.topbar{height:70px;padding:0 16px;gap:12px}.topbar .search-box{flex:1;width:auto;padding:10px}.search-box>span,.user-label{display:none}.topbar-actions{gap:6px}.topbar-actions>button{display:none}main{padding:0 16px}.hero{height:390px}.hero-image{object-position:60% center}.hero-shade{background:linear-gradient(90deg,oklch(.12 .04 263 / .95),oklch(.12 .04 263 / .65) 55%,oklch(.12 .04 263 / .12))}.hero-copy{width:90%;padding:31px 24px}.hero h1{font-size:23px;margin-top:23px}.hero h2{font-size:38px}.hero-copy p{font-size:11px;max-width:270px;margin-top:20px}.hero-actions{gap:9px}.hero-actions .cosmic-button{padding:10px 16px}.desktop-break{display:none}.section-heading{margin-top:26px}.section-heading h2{font-size:21px}.section-heading p{font-size:9px;max-width:235px;line-height:1.6}.subjects-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.subject-image{height:140px}.subject-card-body{padding:13px 11px}.subject-card h3{font-size:13px}.subject-card p{font-size:9px;min-height:32px}.subject-card-meta{font-size:9px}.possibilities>span{display:none}.possibilities{padding:20px 0}.possibilities strong{font-size:13px}.possibilities small{font-size:10px}.app-footer{margin:20px 16px 0;gap:22px;flex-wrap:wrap}.app-footer .brand{margin-right:auto}.app-footer>button{display:none}.app-footer strong{font-size:18px}.catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.catalog-grid .subject-image{height:135px}.catalog-grid .subject-card-body{padding:12px}.catalog-grid .subject-card h3{font-size:13px}.catalog-grid .subject-card p{font-size:9px}.filter-bar{gap:10px;flex-wrap:wrap}.filter-bar .search-box{width:100%}.page-heading h1{font-size:34px}.page-heading p{font-size:12px}.subject-cover{gap:22px;flex-direction:column;align-items:flex-start;padding-top:0}.subject-cover>img{width:100%;height:220px}.subject-cover h1{font-size:30px}.subject-cover p{font-size:12px}.subject-cover .hero-actions{gap:9px}.lesson-layout{grid-template-columns:1fr;gap:10px}.lesson-layout aside{display:none}.lesson-content h2{font-size:22px}.lesson-content p{font-size:14px}.intro-top,.intro-bottom{padding:20px}.intro-top .eyebrow{font-size:7px;max-width:135px;line-height:1.8}.intro-top button{font-size:9px;padding:8px}.intro-center h1{font-size:52px;letter-spacing:10px}.intro-center h2{font-size:19px}.intro-center p{font-size:10px;line-height:1.8}.intro-emblem{width:110px;height:110px}.intro-emblem img{width:72px}.site-viewer-bar{padding:10px 12px}.site-viewer-bar .glass-button{font-size:9px;padding:7px 10px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.intro-progress>span{width:100%}}
+.astra-app::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(620px 420px at 15% 18%,oklch(.32 .09 265/.22),transparent 70%),radial-gradient(720px 520px at 85% 78%,oklch(.3 .08 205/.16),transparent 70%),radial-gradient(520px 360px at 72% 12%,oklch(.3 .1 300/.12),transparent 70%);animation:nebula-drift 28s ease-in-out infinite alternate}
+@keyframes nebula-drift{from{transform:translate3d(-1.5%,-1%,0) scale(1.02)}to{transform:translate3d(1.5%,1.5%,0) scale(1.07)}}
+.intro-orbit{animation:orbit-spin 10s linear infinite}
+.intro-emblem::before,.intro-emblem::after{content:"";position:absolute;border:1px solid oklch(.78 .1 205/.3);border-radius:50%;animation:orbit-pulse 3.4s ease-out infinite}
+.intro-emblem::before{inset:-24px}
+.intro-emblem::after{inset:-50px;animation-delay:1.7s}
+@keyframes orbit-spin{from{transform:rotateX(65deg) rotate(-20deg)}to{transform:rotateX(65deg) rotate(-20deg) rotate(360deg)}}
+@keyframes orbit-pulse{0%{opacity:.7;transform:scale(.92)}70%{opacity:0;transform:scale(1.18)}100%{opacity:0}}
+.intro-emblem img{animation:logo-float 3.4s ease-in-out infinite;filter:drop-shadow(0 0 18px var(--primary))}
+.intro-dust{position:absolute;inset:0;pointer-events:none}
+.intro-dust i{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--cyan);opacity:0;box-shadow:0 0 8px var(--cyan);animation:dust-float 7s ease-in infinite}
+.intro-dust i:nth-child(1){left:12%;bottom:-4%;animation-delay:0s}
+.intro-dust i:nth-child(2){left:26%;bottom:-4%;animation-delay:1.1s;animation-duration:8.5s}
+.intro-dust i:nth-child(3){left:38%;bottom:-4%;animation-delay:2.4s}
+.intro-dust i:nth-child(4){left:52%;bottom:-4%;animation-delay:.6s;animation-duration:9s}
+.intro-dust i:nth-child(5){left:64%;bottom:-4%;animation-delay:3.1s}
+.intro-dust i:nth-child(6){left:76%;bottom:-4%;animation-delay:1.9s;animation-duration:8s}
+.intro-dust i:nth-child(7){left:87%;bottom:-4%;animation-delay:2.8s}
+.intro-dust i:nth-child(8){left:6%;bottom:-4%;animation-delay:4s;animation-duration:9.5s}
+@keyframes dust-float{0%{opacity:0;transform:translateY(0) scale(.6)}12%{opacity:.8}70%{opacity:.5}100%{opacity:0;transform:translateY(-88vh) scale(1.4)}}
+.intro-playing .intro-center h1,.intro-playing .intro-center h2,.intro-playing .intro-center p,.intro-playing .intro-progress{animation:intro-rise .9s ease-out both}
+.intro-playing .intro-center h2{animation-delay:.25s}
+.intro-playing .intro-center p{animation-delay:.5s}
+.intro-playing .intro-progress{animation-delay:.7s}
+@keyframes intro-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.intro-top{animation:intro-rise .8s ease-out both}
+.hero-image{animation:hero-zoom 24s ease-in-out infinite alternate}
+@keyframes hero-zoom{from{transform:scale(1)}to{transform:scale(1.08)}}
+.subject-image img{transition:transform .5s ease}
+.subject-card:hover .subject-image img{transform:scale(1.07)}

@@ -1,24 +1,18 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { useCallback, useState } from 'react';
+import { ArrowRight, BookOpen, Play, ClipboardCheck, Box, Bookmark, Sparkles, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Intro } from '@/components/intro';
+import { SubjectCard } from '@/components/subject-card';
+import { subjects, pageHead } from '@/lib/subjects';
+import universe from '@/assets/astra-universe.jpg';
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
-  component: Index,
-});
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+export const Route = createFileRoute('/')({head:()=>pageHead('Ta’limning yangi olami','ASTRA — matematika, kimyo, biologiya, tarix, geografiya va tillarni kashf eting.'),component:Index});
+function Index(){
+ const [intro,setIntro]=useState(false);const closeIntro=useCallback(()=>setIntro(false),[]);
+ const shortcuts=[{title:'Fanlar',text:'8 ta fan olami',icon:BookOpen,mode:undefined},{title:'Darslar',text:'Bilim sari bir qadam',icon:Play,mode:'darslar'},{title:'Testlar',text:'Bilimingizni sinang',icon:ClipboardCheck,mode:'testlar'},{title:'3D modellar',text:'Amaliy o‘rganish',icon:Box,mode:'modellar'},{title:'Kashf eting',text:'Cheksiz imkoniyatlar',icon:Sparkles,mode:undefined},{title:'Saqlanganlar',text:'Mening to‘plamim',icon:Bookmark,mode:'saqlanganlar'}];
+ return <div className="home-layout"><div className="home-main"><section className="hero"><img src={universe} alt="Sayyora qarshisidagi koinot universiteti" width={1920} height={1024} className="hero-image"/><div className="hero-shade"/><div className="hero-copy"><span className="hero-eyebrow"><Sparkles/> KELAJAK TA’LIMI — BUGUN</span><h1>ASTRA</h1><h2>Ta’limning<br/><span>yangi olami</span></h2><p>Maktab, universitet va o‘quv markazlari uchun<br className="desktop-break"/> barcha fanlar bir platformada. Bilim o‘rganing,<br className="desktop-break"/> tajriba qiling va yangi olamlarni kashf eting.</p><div className="hero-actions"><Button variant="cosmic" size="lg" asChild><Link to="/fanlar">Boshlash <ArrowRight/></Link></Button><Button variant="glass" onClick={()=>setIntro(true)}><Play/> Platformani ko‘rish</Button></div></div><span className="hero-coordinate">41°18′ N · BILIM CHEGARASIZ</span></section>
+ <section className="subjects-section"><div className="section-heading"><div><h2>Asosiy fanlar</h2><p>Bilim olamining barcha yo‘nalishlari bir platformada</p></div><Link to="/fanlar">Barchasi <ArrowRight/></Link></div><div className="subjects-grid">{subjects.map(s=><SubjectCard subject={s} key={s.slug}/>)}</div></section>
+ <section className="possibilities"><div><Sparkles/><span><strong>Har bir kun — yangi kashfiyot</strong><small>Bilim bilan kelajagingizni yarating.</small></span></div><span><BookOpen/> Interaktiv darslar</span><span><Box/> 3D modellar</span><span><ClipboardCheck/> Qiziqarli testlar</span></section></div>
+ <aside className="right-rail"><section><div className="rail-heading"><h2>Tezkor kirish</h2><Link to="/fanlar" aria-label="Barcha fanlar"><ArrowRight/></Link></div><div className="quick-grid">{shortcuts.map((s,i)=><Link key={s.title} to="/fanlar" search={{mode:s.mode,q:undefined}} className={`quick-item quick-${i}`}><i><s.icon/></i><strong>{s.title}</strong><small>{s.text}</small></Link>)}</div></section><section className="guides"><div className="rail-heading"><h2>O‘rganishni boshlang</h2><BookOpen/></div>{[subjects[7],subjects[1],subjects[2],subjects[4],subjects[5]].map(s=>s&&<Link key={s.slug} to="/fan/$slug" params={{slug:s.slug}} className="guide-item"><img src={s.image} alt="" width={54} height={58} loading="lazy"/><span><strong>{s.topics[0]}</strong><small>{s.name}</small><em><BookOpen/> Kirish darsi · Test</em></span><ChevronRight/></Link>)}</section><div className="daily-thought"><span className="eyebrow">KUN HIKMATI</span><p>“Bilim — hech kim sizdan tortib ololmaydigan boylik.”</p><span className="thought-line"/><small>Bugun nimadir yangi o‘rganing.</small></div></aside>{intro&&<Intro onClose={closeIntro}/>}</div>;
 }

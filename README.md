@@ -1,14 +1,34 @@
-# Welcome to your Lovable project
+# ASTRA: Your Starry Learning Journey
+
+bu meni yangi yaratmoqchi bolgan ASTRA  nomli platformam uni korinishi intro kirishi rasmlarda korsatilgan sen shiulardan foydalan va xuddi shunday qilib yarat keyin instro kirish ovozli animatsiyali bolsin  rasmlarda keltirilgan fanlar bosganda fan bolimi ochilsin unda funksiyalar bolsin keyin toliq saytga otishni bosganda  shu saytlarni ulaysan bosganda shular chiqsin keyin animatsiyalik bolsin yulduzlar animatsiyasi introda ham sayt orqa fonida ham
+
+📚 Tarix — edusat-uz-tarix.vercel.app
+
+🌍 Geografiya — edusat-uz-geografiya.vercel.app
+
+🫀 Tibbiyot anatomiyasi — edusat-uz-tibbiyot-anatomiya.vercel.app
+
+🧬 Biologiya / Anatomiya — edusat-uz-biologiya.vercel.app/uz
+
+➗ Matematika — MathHub — edusat-matematika.vercel.app
+
+🇬🇧 Ingliz tili —  edusat-english.vercel.app
+
+🇷🇺 Rus tili —  edusat-rustili.vercel.app
+
+⚗️ Kimyo — Chemverse AI — edusat-kimyo.vercel.app
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://astraorg.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/566b7734-e2d0-4206-bb16-36e774bc5de5).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +40,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS

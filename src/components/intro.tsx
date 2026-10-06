@@ -8,7 +8,7 @@ export function Intro({onClose}:{onClose:()=>void}) {
  const [playing,setPlaying]=useState(false);const [muted,setMuted]=useState(false);const audio=useRef<AudioContext|null>(null);
  useEffect(()=>{if(!playing)return;const timer=setTimeout(onClose,6500);return()=>clearTimeout(timer);},[playing,onClose]);
  useEffect(()=>()=>{void audio.current?.close();},[]);
- setPlaying(true);try{const ctx=new AudioContext();audio.current=ctx;if(muted)void ctx.suspend();else void ctx.resume();
+ function start(){setPlaying(true);try{const ctx=new AudioContext();audio.current=ctx;if(muted)void ctx.suspend();else void ctx.resume();
   const t0=ctx.currentTime;
   const len=Math.floor(ctx.sampleRate*1.5);const buf=ctx.createBuffer(1,len,ctx.sampleRate);const data=buf.getChannelData(0);
   for(let i=0;i<len;i++)data[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.2);

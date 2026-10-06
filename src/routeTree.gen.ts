@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FanlarRouteImport } from './routes/fanlar'
+import { Route as FanSlugRouteImport } from './routes/fan.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FanlarRoute = FanlarRouteImport.update({
+  id: '/fanlar',
+  path: '/fanlar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FanSlugRoute = FanSlugRouteImport.update({
+  id: '/fan/$slug',
+  path: '/fan/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/fanlar': typeof FanlarRoute
+  '/fan/$slug': typeof FanSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/fanlar': typeof FanlarRoute
+  '/fan/$slug': typeof FanSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/fanlar': typeof FanlarRoute
+  '/fan/$slug': typeof FanSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/fanlar' | '/fan/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/fanlar' | '/fan/$slug'
+  id: '__root__' | '/' | '/fanlar' | '/fan/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FanlarRoute: typeof FanlarRoute
+  FanSlugRoute: typeof FanSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fanlar': {
+      id: '/fanlar'
+      path: '/fanlar'
+      fullPath: '/fanlar'
+      preLoaderRoute: typeof FanlarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fan/$slug': {
+      id: '/fan/$slug'
+      path: '/fan/$slug'
+      fullPath: '/fan/$slug'
+      preLoaderRoute: typeof FanSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FanlarRoute: FanlarRoute,
+  FanSlugRoute: FanSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

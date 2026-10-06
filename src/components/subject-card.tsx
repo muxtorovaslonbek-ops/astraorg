@@ -1,0 +1,4 @@
+import { Link } from '@tanstack/react-router';
+import { ArrowRight, BookOpen, PlayCircle } from 'lucide-react';
+import type { Subject } from '@/lib/subjects';
+export function SubjectCard({subject}:{subject:Subject}) {return <Link to="/fan/$slug" params={{slug:subject.slug}} className="subject-card"><div className="subject-image"><img src={subject.image} alt={subject.name} loading="lazy" width={480} height={512}/><span className="image-label">ASTRA / {subject.slug==='kimyo'?'CHEMVERSE':subject.slug==='matematika'?'MATHHUB':'EDUCATION'}</span></div><div className="subject-card-body"><h3>{subject.name}</h3><p>{subject.description}</p><div className="subject-card-meta"><span><BookOpen/> {subject.topics.length} yo‘nalish<br/><PlayCircle/> Darslar va testlar</span><i><ArrowRight/></i></div></div></Link>;}

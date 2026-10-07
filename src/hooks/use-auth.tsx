@@ -30,8 +30,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         void supabase.from("profiles").upsert(
           {
             id: next.user.id,
-            display_name: meta.full_name ?? meta.name ?? next.user.email?.split("@")[0] ?? null,
-            avatar_url: meta.avatar_url ?? meta.picture ?? null,
+            display_name: meta['full_name'] ?? meta['name'] ?? next.user.email?.split("@")[0] ?? null,
+            avatar_url: meta['avatar_url'] ?? meta['picture'] ?? null,
             provider: (next.user.app_metadata?.provider as string | undefined) ?? "email",
           },
           { onConflict: "id", ignoreDuplicates: true },

@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as FanlarRouteImport } from './routes/fanlar'
 import { Route as FanSlugRouteImport } from './routes/fan.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FanlarRoute = FanlarRouteImport.update({
@@ -31,30 +37,34 @@ const FanSlugRoute = FanSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/fanlar': typeof FanlarRoute
   '/fan/$slug': typeof FanSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/fanlar': typeof FanlarRoute
   '/fan/$slug': typeof FanSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/fanlar': typeof FanlarRoute
   '/fan/$slug': typeof FanSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/fanlar' | '/fan/$slug'
+  fullPaths: '/' | '/auth' | '/fanlar' | '/fan/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/fanlar' | '/fan/$slug'
-  id: '__root__' | '/' | '/fanlar' | '/fan/$slug'
+  to: '/' | '/auth' | '/fanlar' | '/fan/$slug'
+  id: '__root__' | '/' | '/auth' | '/fanlar' | '/fan/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   FanlarRoute: typeof FanlarRoute
   FanSlugRoute: typeof FanSlugRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/fanlar': {
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   FanlarRoute: FanlarRoute,
   FanSlugRoute: FanSlugRoute,
 }

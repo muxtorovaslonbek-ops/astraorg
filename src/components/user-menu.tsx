@@ -19,8 +19,8 @@ export function UserMenu() {
   }
 
   const meta = user.user_metadata ?? {};
-  const name: string = meta.full_name ?? meta.name ?? user.email?.split("@")[0] ?? "O‘quvchi";
-  const avatar: string | undefined = meta.avatar_url ?? meta.picture;
+  const name: string = meta['full_name'] ?? meta['name'] ?? user.email?.split("@")[0] ?? "O‘quvchi";
+  const avatar: string | undefined = meta['avatar_url'] ?? meta['picture'];
 
   return (
     <>

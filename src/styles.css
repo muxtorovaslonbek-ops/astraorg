@@ -44,3 +44,12 @@
 @keyframes hero-zoom{from{transform:scale(1)}to{transform:scale(1.08)}}
 .subject-image img{transition:transform .5s ease}
 .subject-card:hover .subject-image img{transform:scale(1.07)}
+.auth-wrap{position:relative;z-index:1;display:flex;justify-content:center;padding:40px 0}
+.auth-card{width:100%;max-width:420px;padding:28px;border-radius:14px;border:1px solid var(--border);background:oklch(.16 .043 263/.85);backdrop-filter:blur(14px);display:grid;gap:14px}
+.auth-card h1{font-size:24px}.auth-sub,.auth-hint{color:var(--muted-foreground)}
+.auth-social,.auth-form{display:grid;gap:10px}.auth-telegram{display:flex;justify-content:center}
+.auth-or{text-align:center;color:var(--muted-foreground);font-size:11px}
+.auth-input{width:100%;padding:11px 12px;border-radius:9px;border:1px solid var(--border);background:var(--secondary);color:var(--foreground)}
+.auth-error{color:var(--destructive)}.auth-ok{color:var(--green)}
+.auth-links{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}.auth-links button{background:none;border:0;color:var(--cyan)}
+.user-avatar-img{width:100%;height:100%;border-radius:50%;object-fit:cover}

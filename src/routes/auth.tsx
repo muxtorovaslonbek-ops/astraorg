@@ -22,7 +22,7 @@ export const Route = createFileRoute("/auth")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  errorComponent: ({ error }) => <div className="auth-card"><p>{error.message}</p></div>,
+  errorComponent: ({ error }) => <div className="auth-card"><p>{error instanceof Error ? error.message : "Xatolik yuz berdi"}</p></div>,
   component: AuthPage,
 });
 

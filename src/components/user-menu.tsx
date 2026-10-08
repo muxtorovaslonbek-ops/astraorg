@@ -11,7 +11,7 @@ export function UserMenu() {
   if (!user) {
     return (
       <Button variant="cosmic" size="sm" asChild>
-        <Link to="/auth">
+        <Link to="/auth" search={{ next: undefined }}>
           <LogIn /> Kirish
         </Link>
       </Button>

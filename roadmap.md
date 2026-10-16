@@ -4,3 +4,8 @@
 - [x] Verify navigation, intro, and small-screen layout.
 - [x] Enhance intro sound, add shooting stars and background nebula animations.
 - [x] Add Hasharotlar biologiyasi with a modern image and supplied destination; verify its page and viewer.
+- [x] Replace the opening animation with the uploaded intro video and verify playback, sound controls, skip and sign-in handoff.
+- [x] Harden identity loading, automatic approval refresh and admin update confirmation; verify approved subject access and Telegram signature tests.
+- [ ] Verify admin approve/pending/reject actions: blocked because the requesting user's account has no admin role; requires an authorized admin session.
+- [ ] Verify Telegram sign-in: widget reports “Bot domain invalid”; owner must register the site's domain with BotFather /setdomain and complete Telegram sign-in.
+- [ ] Verify email registration and Google sign-in end-to-end: requires email confirmation/Google interaction; hosted signup/provider settings remain unverified.

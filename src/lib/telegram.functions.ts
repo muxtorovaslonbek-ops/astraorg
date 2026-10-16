@@ -38,7 +38,7 @@ export const telegramLogin = createServerFn({ method: "POST" })
     const displayName = [data.first_name, data.last_name].filter(Boolean).join(" ");
 
     // Creates the account on first login; an "already registered" error is expected afterwards.
-    await supabaseAdmin.auth.admin.createUser({
+    const { error: createError } = await supabaseAdmin.auth.admin.createUser({
       email,
       email_confirm: true,
       user_metadata: {
@@ -49,15 +49,17 @@ export const telegramLogin = createServerFn({ method: "POST" })
         provider: "telegram",
       },
     });
+    if (createError && createError.code !== "email_exists" && createError.code !== "user_already_exists") {
+      return { ok: false, error: "Telegram hisobini yaratib bo‘lmadi. Keyinroq urinib ko‘ring." };
+    }
 
     const { data: link, error } = await supabaseAdmin.auth.admin.generateLink({ type: "magiclink", email });
     const tokenHash = link?.properties?.hashed_token;
     if (error || !tokenHash || !link?.user) {
-      console.error("telegram generateLink failed", error);
       return { ok: false, error: "Kirish tokenini yaratib bo‘lmadi. Keyinroq urinib ko‘ring." };
     }
 
-    await supabaseAdmin.from("profiles").upsert(
+    const { error: profileError } = await supabaseAdmin.from("profiles").upsert(
       {
         id: link.user.id,
         display_name: displayName,
@@ -68,6 +70,7 @@ export const telegramLogin = createServerFn({ method: "POST" })
       },
       { onConflict: "id" },
     );
+    if (profileError) return { ok: false, error: "Profilni saqlab bo‘lmadi. Keyinroq urinib ko‘ring." };
 
     return { ok: true, tokenHash };
   });

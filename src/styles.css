@@ -71,3 +71,8 @@
 .status-approved{color:oklch(0.8 0.17 150);border-color:oklch(0.8 0.17 150 / .5)}
 .status-pending{color:oklch(0.85 0.15 85);border-color:oklch(0.85 0.15 85 / .5)}
 .status-rejected{color:var(--destructive);border-color:var(--destructive)}
+.intro-video-dialog{background:var(--background)}
+.intro-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.intro-video-dialog .intro-top,.intro-video-dialog .intro-bottom{z-index:2}
+.intro-video-start{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;background:color-mix(in oklab,var(--background) 30%,transparent)}
+.intro-video-start p{max-width:360px;text-align:center;color:var(--foreground);line-height:1.7}

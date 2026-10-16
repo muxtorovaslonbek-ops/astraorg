@@ -32,6 +32,7 @@ function AdminPage() {
   const [rows, setRows] = useState<Row[]>([]);
   const [filter, setFilter] = useState<"all" | AccessStatus>("all");
   const [err, setErr] = useState<string | null>(null);
+  const [updating, setUpdating] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     const { data, error } = await supabase
@@ -44,9 +45,14 @@ function AdminPage() {
   useEffect(() => { if (isAdmin) void load(); }, [isAdmin, load]);
 
   async function setStatus(id: string, status: AccessStatus) {
-    const { error } = await supabase.from("profiles").update({ status }).eq("id", id);
-    if (error) setErr(error.message);
-    else setRows((r) => r.map((x) => (x.id === id ? { ...x, status } : x)));
+    setUpdating(id); setErr(null);
+    try {
+      const { data, error } = await supabase.from("profiles").update({ status }).eq("id", id).select("status").single();
+      if (error) throw error;
+      if (data.status !== status) throw new Error("Holat o‘zgarmadi. Ruxsatingizni tekshiring.");
+      setRows((r) => r.map((x) => (x.id === id ? { ...x, status: data.status } : x)));
+    } catch (error) { setErr(error instanceof Error ? error.message : "Holatni o‘zgartirib bo‘lmadi."); }
+    finally { setUpdating(null); }
   }
 
   if (loading) return <div className="gate-card"><p>Yuklanmoqda…</p></div>;
@@ -80,11 +86,11 @@ function AdminPage() {
               <small>{r.email ?? (r.telegram_username ? `@${r.telegram_username}` : "—")} · {r.provider ?? "email"} · {new Date(r.created_at).toLocaleDateString("uz-UZ")}</small>
             </div>
             <span className={`status-badge status-${r.status}`}>{LABEL[r.status] ?? r.status}</span>
-            <div className="admin-actions">
+            <fieldset className="admin-actions border-0 p-0 m-0" disabled={updating !== null} aria-label="Foydalanuvchi holati">
               <Button size="sm" variant={r.status === "approved" ? "cosmic" : "glass"} onClick={() => void setStatus(r.id, "approved")}><Check /> Tasdiqlash</Button>
               <Button size="sm" variant={r.status === "pending" ? "cosmic" : "glass"} onClick={() => void setStatus(r.id, "pending")}><Clock /> Kutish</Button>
               <Button size="sm" variant={r.status === "rejected" ? "cosmic" : "glass"} onClick={() => void setStatus(r.id, "rejected")}><X /> Rad etish</Button>
-            </div>
+            </fieldset>
           </div>
         ))}
       </div>

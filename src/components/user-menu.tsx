@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 
 export function UserMenu() {
-  const { user, loading, signOut } = useAuth();
+  const { user, loading, signOut, isAdmin } = useAuth();
 
   if (loading) return <div className="user-avatar" aria-hidden="true">·</div>;
 
@@ -29,7 +29,7 @@ export function UserMenu() {
       </div>
       <div className="user-label">
         <strong>{name}</strong>
-        <small>O‘quvchi</small>
+        <small>{isAdmin ? 'Administrator' : 'O‘quvchi'}</small>
       </div>
       <Button variant="ghost" size="icon" aria-label="Chiqish" onClick={() => void signOut()}>
         <LogOut />

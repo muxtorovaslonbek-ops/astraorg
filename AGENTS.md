@@ -11,5 +11,5 @@
 
 - Keep shared navigation and the animated star background in AstraShell around the root Outlet so every content page shares the same experience.
 - Define subject content and destinations in a browser-safe central subject catalog so cards and subject pages stay consistent.
-- Implement the intro sound with a browser Web Audio synth started by a user gesture so audio respects browser autoplay rules without an external service.
+- Play intro media from a Lovable Assets pointer after a user gesture, using the video's native audio and ended event so sound obeys autoplay rules and the sign-in handoff follows the actual duration.
 - Open external educational platforms in an iframe viewer with a new-tab fallback so the supplied sites remain accessible when embedding is restricted.

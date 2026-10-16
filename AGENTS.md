@@ -13,3 +13,4 @@
 - Define subject content and destinations in a browser-safe central subject catalog so cards and subject pages stay consistent.
 - Play intro media from a Lovable Assets pointer after a user gesture, using the video's native audio and ended event so sound obeys autoplay rules and the sign-in handoff follows the actual duration.
 - Open external educational platforms in an iframe viewer with a new-tab fallback so the supplied sites remain accessible when embedding is restricted.
+- Resolve access state for the current identity before rendering gated content, and refresh while the tab is visible so approval changes do not require signing in again.

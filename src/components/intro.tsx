@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Volume2, VolumeX, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import introVideo from '@/assets/astra-intro.mp4.asset.json';
+import introWebm from '@/assets/astra-intro.webm.asset.json';
 
 export function Intro({ onClose }: { onClose: () => void }) {
   const video = useRef<HTMLVideoElement>(null);
@@ -43,8 +44,11 @@ export function Intro({ onClose }: { onClose: () => void }) {
           else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
         }
       }}>
-      <video ref={video} className="intro-video" src={introVideo.url} playsInline preload="auto" muted={muted}
-        onEnded={onClose} onError={() => { setFailed(true); setPlaying(false); }} />
+      <video ref={video} className="intro-video" playsInline preload="auto" muted={muted}
+        onEnded={onClose} onError={() => { setFailed(true); setPlaying(false); }}>
+        <source src={introWebm.url} type="video/webm" />
+        <source src={introVideo.url} type="video/mp4" />
+      </video>
       <div className="intro-top">
         <span className="eyebrow">ASTRA</span>
         <Button variant="glass" onClick={onClose}>O‘tkazib yuborish <ArrowRight /></Button>

@@ -4,3 +4,5 @@
 - [x] Verify navigation, intro, and small-screen layout.
 - [x] Enhance intro sound, add shooting stars and background nebula animations.
 - [x] Add Hasharotlar biologiyasi with a modern image and supplied destination; verify its page and viewer.
+- [ ] Replace the opening animation with the uploaded intro video and verify playback, sound controls, skip and sign-in handoff.
+- [ ] Complete and verify unfinished registration, Telegram sign-in and admin approval work; identify external configuration blockers.

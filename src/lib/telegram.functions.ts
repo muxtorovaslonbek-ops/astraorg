@@ -4,13 +4,13 @@ import { verifyTelegramAuth, type TelegramAuthData } from "./telegram-verify";
 
 const telegramSchema = z
   .object({
-    id: z.number(),
+    id: z.number().int().positive().safe(),
     first_name: z.string().max(256),
     last_name: z.string().max(256).optional(),
     username: z.string().max(256).optional(),
     photo_url: z.string().max(1024).optional(),
-    auth_date: z.number(),
-    hash: z.string().max(256),
+    auth_date: z.number().int().positive(),
+    hash: z.string().regex(/^[a-fA-F0-9]{64}$/),
   })
   .passthrough();
 
@@ -57,6 +57,9 @@ export const telegramLogin = createServerFn({ method: "POST" })
     const tokenHash = link?.properties?.hashed_token;
     if (error || !tokenHash || !link?.user) {
       return { ok: false, error: "Kirish tokenini yaratib bo‘lmadi. Keyinroq urinib ko‘ring." };
+    }
+    if (link.user.user_metadata?.['telegram_id'] !== data.id) {
+      return { ok: false, error: "Bu hisob Telegram foydalanuvchisiga mos kelmadi. Administratorga murojaat qiling." };
     }
 
     const { error: profileError } = await supabaseAdmin.from("profiles").upsert(

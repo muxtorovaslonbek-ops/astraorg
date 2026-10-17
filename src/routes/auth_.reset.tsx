@@ -37,7 +37,7 @@ function ResetPassword() {
   }
   return <section className="auth-wrap"><div className="auth-card">
     <h1>Yangi parol</h1>
-    {loading ? <p>Yuklanmoqda…</p> : saved ? <><p className="auth-ok" role="status">Parolingiz yangilandi.</p><Button variant="cosmic" asChild><Link to="/">Davom etish</Link></Button></> : !user ? <><p className="auth-sub">Tiklash havolasi eskirgan yoki ochilmagan. Yangi havola so‘rang.</p><Button variant="glass" asChild><Link to="/auth">Kirishga qaytish</Link></Button></> : <form className="auth-form" onSubmit={event => void submit(event)}>
+    {loading ? <p>Yuklanmoqda…</p> : saved ? <><p className="auth-ok" role="status">Parolingiz yangilandi.</p><Button variant="cosmic" asChild><Link to="/">Davom etish</Link></Button></> : !user ? <><p className="auth-sub">Tiklash havolasi eskirgan yoki ochilmagan. Yangi havola so‘rang.</p><Button variant="glass" asChild><Link to="/auth" search={{ next: undefined }}>Kirishga qaytish</Link></Button></> : <form className="auth-form" onSubmit={event => void submit(event)}>
       <input className="auth-input" type="password" aria-label="Yangi parol" placeholder="Yangi parol" autoComplete="new-password" required minLength={6} value={password} onChange={event => setPassword(event.target.value)} />
       <input className="auth-input" type="password" aria-label="Parolni takrorlang" placeholder="Parolni takrorlang" autoComplete="new-password" required minLength={6} value={confirm} onChange={event => setConfirm(event.target.value)} />
       {error && <p className="auth-error" role="alert">{error}</p>}

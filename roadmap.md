@@ -1,6 +1,6 @@
 # ASTRA
-- [ ] Add the cosmic image behind the intro start screen and preserve uploaded video playback.
-- [ ] Complete remaining registration and Telegram code fixes and verify available sign-in paths.
+- [x] Add the cosmic image behind the intro start screen and preserve uploaded video playback; browser verified image, audible playback and sign-in handoff.
+- [x] Complete registration return-path safety and password recovery page; verify recovery error states with the requesting user's session. Validate Telegram bot token and signed identity handling; five tests passed.
 - [x] Build reference-matched cosmic home and animated audible intro.
 - [x] Add functional subject sections and all eight external destinations.
 - [x] Verify navigation, intro, and small-screen layout.
@@ -10,4 +10,4 @@
 - [x] Harden identity loading, automatic approval refresh and admin update confirmation; verify approved subject access and Telegram signature tests.
 - [ ] Verify admin approve/pending/reject actions: blocked because the requesting user's account has no admin role; requires an authorized admin session.
 - [ ] Verify Telegram sign-in: widget reports “Bot domain invalid”; owner must register the site's domain with BotFather /setdomain and complete Telegram sign-in.
-- [ ] Verify email registration and Google sign-in end-to-end: requires email confirmation/Google interaction; hosted signup/provider settings remain unverified.
+- [ ] Verify email registration and Google sign-in end-to-end: hosted settings confirmed email/Google enabled, signup allowed and email confirmation required; final confirmation and Google account interaction still require the user.

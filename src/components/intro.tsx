@@ -3,6 +3,8 @@ import { ArrowRight, Volume2, VolumeX, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import introVideo from '@/assets/astra-intro.mp4.asset.json';
 import introWebm from '@/assets/astra-intro.webm.asset.json';
+import introCosmos from '@/assets/intro-cosmos.jpg';
+import { StarField } from '@/components/star-field';
 
 export function Intro({ onClose }: { onClose: () => void }) {
   const video = useRef<HTMLVideoElement>(null);
@@ -54,6 +56,9 @@ export function Intro({ onClose }: { onClose: () => void }) {
         <Button variant="glass" onClick={onClose}>O‘tkazib yuborish <ArrowRight /></Button>
       </div>
       {!playing && <div className="intro-video-start">
+        <img className="intro-start-cosmos" src={introCosmos} alt="" width={1920} height={1088} />
+        <StarField mode="idle" />
+        <div className="intro-start-copy"><h1>ASTRA</h1><p>Ta’limning yangi olami</p></div>
         <Button ref={startButton} variant="cosmic" size="lg" onClick={() => void start()}>
           {failed ? <RotateCcw /> : <Play />} {failed ? 'Qayta urinish' : 'Sayohatni boshlash'}
         </Button>

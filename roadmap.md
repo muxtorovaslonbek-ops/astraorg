@@ -1,4 +1,6 @@
 # ASTRA
+- [ ] Add the cosmic image behind the intro start screen and preserve uploaded video playback.
+- [ ] Complete remaining registration and Telegram code fixes and verify available sign-in paths.
 - [x] Build reference-matched cosmic home and animated audible intro.
 - [x] Add functional subject sections and all eight external destinations.
 - [x] Verify navigation, intro, and small-screen layout.

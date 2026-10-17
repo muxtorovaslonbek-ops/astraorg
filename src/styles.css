@@ -76,3 +76,9 @@
 .intro-video-dialog .intro-top,.intro-video-dialog .intro-bottom{z-index:2}
 .intro-video-start{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;background:color-mix(in oklab,var(--background) 30%,transparent)}
 .intro-video-start p{max-width:360px;text-align:center;color:var(--foreground);line-height:1.7}
+.intro-start-cosmos{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:intro-drift 12s ease-out both}
+.intro-video-start .star-field{position:absolute}
+.intro-video-start>button,.intro-video-start>p,.intro-start-copy{position:relative;z-index:1}
+.intro-start-copy{text-align:center;margin-bottom:20px}
+.intro-start-copy h1{font-size:64px;font-weight:500;line-height:1.15;color:var(--foreground);text-shadow:var(--shadow-blue)}
+.intro-start-copy p{margin-top:14px;font-size:16px}

@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { getTelegramConfig, telegramLogin } from "@/lib/telegram.functions";
 import type { TelegramAuthData } from "@/lib/telegram-verify";
+import { safeAuthPath } from '@/lib/auth-path';
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (s: Record<string, unknown>) => ({
-    next: typeof s["next"] === "string" && s["next"].startsWith("/") && !s["next"].startsWith("//") ? (s["next"] as string) : undefined,
+    next: typeof s["next"] === "string" ? safeAuthPath(s["next"]) : undefined,
   }),
   loader: () => getTelegramConfig(),
   head: () => ({
@@ -45,6 +46,7 @@ function TelegramButton({ bot, onAuth }: { bot: string; onAuth: (u: TelegramAuth
     host.appendChild(s);
     return () => {
       host.innerHTML = "";
+      delete (window as unknown as Record<string, unknown>)["onTelegramAuth"];
     };
   }, [bot]);
   return <div ref={ref} className="auth-telegram" />;
@@ -63,7 +65,10 @@ function AuthPage() {
   const [msg, setMsg] = useState<{ type: "error" | "ok"; text: string } | null>(null);
 
   useEffect(() => {
-    if (user) router.history.push(next ?? "/");
+    if (!user) return;
+    const saved = sessionStorage.getItem('astra-auth-next');
+    sessionStorage.removeItem('astra-auth-next');
+    router.history.replace(safeAuthPath(next ?? saved));
   }, [user, next, router]);
 
   async function submit(e: FormEvent) {
@@ -83,7 +88,7 @@ function AuthPage() {
         if (error) throw error;
         if (!data.session) setMsg({ type: "ok", text: "Emailingizga tasdiqlash havolasi yuborildi. Havolani bosing, so‘ng kiring." });
       } else {
-        const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/auth` });
+        const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/auth/reset` });
         if (error) throw error;
         setMsg({ type: "ok", text: "Parolni tiklash havolasi emailingizga yuborildi." });
       }
@@ -96,22 +101,15 @@ function AuthPage() {
 
   async function google() {
     setMsg(null);
-    const host = window.location.hostname;
-    const managed = /(^|\.)(lovable\.app|lovableproject\.com|lovable\.dev)$/.test(host);
-    if (managed) {
-      const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
-      if (result.error) setMsg({ type: "error", text: "Google orqali kirib bo‘lmadi." });
-    } else {
-      // Vercel / own domain: uses the Google provider enabled in your Supabase project.
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: { redirectTo: `${window.location.origin}/auth` },
-      });
-      if (error) setMsg({ type: "error", text: error.message });
-    }
+    sessionStorage.setItem('astra-auth-next', safeAuthPath(next));
+    try {
+      const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: `${window.location.origin}/auth` });
+      if (result.error) setMsg({ type: "error", text: "Google orqali kirib bo‘lmadi. Qayta urinib ko‘ring." });
+    } catch { setMsg({ type: "error", text: "Google orqali kirib bo‘lmadi. Qayta urinib ko‘ring." }); }
   }
 
   async function telegram(u: TelegramAuthData) {
+    if (busy) return;
     setBusy(true);
     setMsg(null);
     try {
@@ -138,7 +136,7 @@ function AuthPage() {
             {config.enabled && config.botUsername ? (
               <TelegramButton bot={config.botUsername} onAuth={(u) => void telegram(u)} />
             ) : (
-              <small className="auth-hint">Telegram orqali kirish sozlanmagan (TELEGRAM_BOT_TOKEN va TELEGRAM_BOT_USERNAME kerak).</small>
+              <small className="auth-hint">Telegram orqali kirish hozircha mavjud emas.</small>
             )}
             <span className="auth-or">yoki email bilan</span>
           </div>
@@ -146,11 +144,11 @@ function AuthPage() {
 
         <form onSubmit={(e) => void submit(e)} className="auth-form">
           {mode === "signup" && (
-            <input className="auth-input" placeholder="Ismingiz" value={name} onChange={(e) => setName(e.target.value)} required maxLength={100} />
+            <input className="auth-input" aria-label="Ismingiz" autoComplete="name" placeholder="Ismingiz" value={name} onChange={(e) => setName(e.target.value)} required maxLength={100} />
           )}
-          <input className="auth-input" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <input className="auth-input" type="email" aria-label="Email" autoComplete="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           {mode !== "forgot" && (
-            <input className="auth-input" type="password" placeholder="Parol (kamida 6 belgi)" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
+            <input className="auth-input" type="password" aria-label="Parol" autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} placeholder="Parol (kamida 6 belgi)" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
           )}
           {msg && <p className={msg.type === "error" ? "auth-error" : "auth-ok"} role="status">{msg.text}</p>}
           <Button type="submit" variant="cosmic" disabled={busy}>
@@ -159,9 +157,9 @@ function AuthPage() {
         </form>
 
         <div className="auth-links">
-          {mode !== "signin" && <button type="button" onClick={() => setMode("signin")}>Kirish</button>}
-          {mode !== "signup" && <button type="button" onClick={() => setMode("signup")}>Ro‘yxatdan o‘tish</button>}
-          {mode === "signin" && <button type="button" onClick={() => setMode("forgot")}>Parolni unutdingizmi?</button>}
+          {mode !== "signin" && <Button variant="link" type="button" onClick={() => { setMode("signin"); setMsg(null); }}>Kirish</Button>}
+          {mode !== "signup" && <Button variant="link" type="button" onClick={() => { setMode("signup"); setMsg(null); }}>Ro‘yxatdan o‘tish</Button>}
+          {mode === "signin" && <Button variant="link" type="button" onClick={() => { setMode("forgot"); setMsg(null); }}>Parolni unutdingizmi?</Button>}
         </div>
       </div>
     </section>

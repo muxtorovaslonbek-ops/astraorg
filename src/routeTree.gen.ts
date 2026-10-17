@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as FanlarRouteImport } from './routes/fanlar'
+import { Route as AuthResetRouteImport } from './routes/auth_.reset'
 import { Route as FanSlugRouteImport } from './routes/fan.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -35,6 +36,11 @@ const FanlarRoute = FanlarRouteImport.update({
   path: '/fanlar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthResetRoute = AuthResetRouteImport.update({
+  id: '/auth_/reset',
+  path: '/auth/reset',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FanSlugRoute = FanSlugRouteImport.update({
   id: '/fan/$slug',
   path: '/fan/$slug',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/fanlar': typeof FanlarRoute
+  '/auth/reset': typeof AuthResetRoute
   '/fan/$slug': typeof FanSlugRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/fanlar': typeof FanlarRoute
+  '/auth/reset': typeof AuthResetRoute
   '/fan/$slug': typeof FanSlugRoute
 }
 export interface FileRoutesById {
@@ -61,14 +69,22 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/fanlar': typeof FanlarRoute
+  '/auth_/reset': typeof AuthResetRoute
   '/fan/$slug': typeof FanSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/auth' | '/fanlar' | '/fan/$slug'
+  fullPaths: '/' | '/admin' | '/auth' | '/fanlar' | '/auth/reset' | '/fan/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/auth' | '/fanlar' | '/fan/$slug'
-  id: '__root__' | '/' | '/admin' | '/auth' | '/fanlar' | '/fan/$slug'
+  to: '/' | '/admin' | '/auth' | '/fanlar' | '/auth/reset' | '/fan/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/fanlar'
+    | '/auth_/reset'
+    | '/fan/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,6 +92,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
   FanlarRoute: typeof FanlarRoute
+  AuthResetRoute: typeof AuthResetRoute
   FanSlugRoute: typeof FanSlugRoute
 }
 
@@ -109,6 +126,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FanlarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth_/reset': {
+      id: '/auth_/reset'
+      path: '/auth/reset'
+      fullPath: '/auth/reset'
+      preLoaderRoute: typeof AuthResetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/fan/$slug': {
       id: '/fan/$slug'
       path: '/fan/$slug'
@@ -124,6 +148,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
   FanlarRoute: FanlarRoute,
+  AuthResetRoute: AuthResetRoute,
   FanSlugRoute: FanSlugRoute,
 }
 export const routeTree = rootRouteImport

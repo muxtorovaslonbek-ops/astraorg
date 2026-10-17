@@ -4,7 +4,7 @@ import { Clock, ShieldX, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 
-const OPEN_PATHS = ["/auth", "/admin"];
+const OPEN_PATHS = ["/auth", "/auth/reset", "/admin"];
 
 export function AccessGate({ children, introOpen }: { children: ReactNode; introOpen: boolean }) {
   const { user, loading, status, isAdmin, refresh, signOut } = useAuth();

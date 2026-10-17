@@ -32,6 +32,17 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 
 ## Development
 
+## Sign-in deployment checklist
+
+- Telegram bot `@talimeduz_bot` requires its site domain registered in BotFather: `/setdomain` → select the bot → enter `astraorg.lovable.app` for the published Lovable app, or the actual Vercel hostname when testing there. Telegram currently rejects the preview hostname.
+- Server-only Telegram values are `TELEGRAM_BOT_TOKEN` and `TELEGRAM_BOT_USERNAME`; never prefix the token with `VITE_`.
+- Email signup retains confirmation. Password recovery returns to `/auth/reset`; allow that full URL for each deployment in Lovable Cloud auth redirect settings.
+- Google uses managed Lovable Cloud sign-in. A separately owned backend on Vercel needs its own supported provider configuration; do not assume managed credentials or Cloud's private service key can be exported.
+- A Vercel deployment must run the full TanStack Start server, not serve a static `dist` directory, because Telegram login requires server functions. Validate its deployment target separately before claiming Vercel sign-in works.
+- Administrator access comes from the protected role table. The requesting account currently has only the user role; use an authorized administrator account to test approvals.
+
+## Local development
+
 Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
 ```sh

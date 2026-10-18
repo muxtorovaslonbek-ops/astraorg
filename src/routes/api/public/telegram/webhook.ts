@@ -20,7 +20,7 @@ function safeEqual(a: string, b: string): boolean {
 function generateCode(): string {
   const buf = new Uint32Array(1);
   crypto.getRandomValues(buf);
-  return String(100000 + (buf[0] % 900000));
+  return String(100000 + ((buf[0] ?? 0) % 900000));
 }
 
 async function sendMessage(botToken: string, chatId: number, text: string) {

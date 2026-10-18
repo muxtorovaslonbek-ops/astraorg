@@ -1,11 +1,10 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { getTelegramConfig, telegramCodeLogin } from "@/lib/telegram.functions";
-import type { TelegramAuthData } from "@/lib/telegram-verify";
 import { safeAuthPath } from '@/lib/auth-path';
 
 export const Route = createFileRoute("/auth")({

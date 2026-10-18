@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
-import { getTelegramConfig, telegramLogin } from "@/lib/telegram.functions";
+import { getTelegramConfig, telegramCodeLogin } from "@/lib/telegram.functions";
 import type { TelegramAuthData } from "@/lib/telegram-verify";
 import { safeAuthPath } from '@/lib/auth-path';
 

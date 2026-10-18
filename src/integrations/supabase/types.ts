@@ -53,6 +53,48 @@ export type Database = {
         }
         Relationships: []
       }
+      telegram_codes: {
+        Row: {
+          chat_id: number
+          code: string
+          created_at: string
+          expires_at: string
+          first_name: string | null
+          id: string
+          last_name: string | null
+          photo_url: string | null
+          telegram_id: number
+          used: boolean
+          username: string | null
+        }
+        Insert: {
+          chat_id: number
+          code: string
+          created_at?: string
+          expires_at: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          photo_url?: string | null
+          telegram_id: number
+          used?: boolean
+          username?: string | null
+        }
+        Update: {
+          chat_id?: number
+          code?: string
+          created_at?: string
+          expires_at?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          photo_url?: string | null
+          telegram_id?: number
+          used?: boolean
+          username?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string

@@ -27,29 +27,38 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-function TelegramButton({ bot, onAuth }: { bot: string; onAuth: (u: TelegramAuthData) => void }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const cb = useRef(onAuth);
-  cb.current = onAuth;
-  useEffect(() => {
-    const host = ref.current;
-    if (!host) return;
-    (window as unknown as Record<string, unknown>)["onTelegramAuth"] = (u: TelegramAuthData) => cb.current(u);
-    const s = document.createElement("script");
-    s.src = "https://telegram.org/js/telegram-widget.js?22";
-    s.async = true;
-    s.setAttribute("data-telegram-login", bot);
-    s.setAttribute("data-size", "large");
-    s.setAttribute("data-radius", "10");
-    s.setAttribute("data-request-access", "write");
-    s.setAttribute("data-onauth", "onTelegramAuth(user)");
-    host.appendChild(s);
-    return () => {
-      host.innerHTML = "";
-      delete (window as unknown as Record<string, unknown>)["onTelegramAuth"];
-    };
-  }, [bot]);
-  return <div ref={ref} className="auth-telegram" />;
+function TelegramCodeForm({ bot, busy, onSubmit }: { bot: string; busy: boolean; onSubmit: (code: string) => void }) {
+  const [code, setCode] = useState("");
+  return (
+    <form
+      className="auth-telegram-code"
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (code.trim().length === 6) onSubmit(code.trim());
+      }}
+    >
+      <p className="auth-hint">
+        Telegram’da <a href={`https://t.me/${bot}`} target="_blank" rel="noreferrer">@{bot}</a> botiga biror xabar
+        yuboring — bot sizga 6 xonali kod yuboradi.
+      </p>
+      <div className="auth-telegram-row">
+        <input
+          className="auth-input"
+          inputMode="numeric"
+          pattern="\d{6}"
+          maxLength={6}
+          aria-label="Telegram kodi"
+          placeholder="6 xonali kod"
+          value={code}
+          onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+          required
+        />
+        <Button type="submit" variant="cosmic" disabled={busy || code.length !== 6}>
+          Kirish
+        </Button>
+      </div>
+    </form>
+  );
 }
 
 function AuthPage() {

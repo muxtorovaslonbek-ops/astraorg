@@ -8,6 +8,6 @@
 - [x] Add Hasharotlar biologiyasi with a modern image and supplied destination; verify its page and viewer.
 - [x] Replace the opening animation with the uploaded intro video and verify playback, sound controls, skip and sign-in handoff.
 - [x] Harden identity loading, automatic approval refresh and admin update confirmation; verify approved subject access and Telegram signature tests.
-- [ ] Verify admin approve/pending/reject actions: blocked because the requesting user's account has no admin role; requires an authorized admin session.
-- [ ] Verify Telegram sign-in: widget reports “Bot domain invalid”; owner must register the site's domain with BotFather /setdomain and complete Telegram sign-in.
+- [x] Verify admin approve/pending/reject actions with an authorized admin session; reject and re-approve reflected in the database.
+- [x] Verify Telegram sign-in widget renders on the published site after the owner registered the domain with BotFather; full sign-in needs a real Telegram account.
 - [ ] Verify email registration and Google sign-in end-to-end: hosted settings confirmed email/Google enabled, signup allowed and email confirmation required; final confirmation and Google account interaction still require the user.

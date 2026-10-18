@@ -117,12 +117,12 @@ function AuthPage() {
     } catch { setMsg({ type: "error", text: "Google orqali kirib bo‘lmadi. Qayta urinib ko‘ring." }); }
   }
 
-  async function telegram(u: TelegramAuthData) {
+  async function telegramCode(code: string) {
     if (busy) return;
     setBusy(true);
     setMsg(null);
     try {
-      const res = await telegramLogin({ data: u });
+      const res = await telegramCodeLogin({ data: { code } });
       if (!res.ok) throw new Error(res.error);
       const { error } = await supabase.auth.verifyOtp({ token_hash: res.tokenHash, type: "magiclink" });
       if (error) throw error;
@@ -143,7 +143,7 @@ function AuthPage() {
           <div className="auth-social">
             <Button type="button" variant="glass" onClick={() => void google()}>Google bilan davom etish</Button>
             {config.enabled && config.botUsername ? (
-              <TelegramButton bot={config.botUsername} onAuth={(u) => void telegram(u)} />
+              <TelegramCodeForm bot={config.botUsername} busy={busy} onSubmit={(code) => void telegramCode(code)} />
             ) : (
               <small className="auth-hint">Telegram orqali kirish hozircha mavjud emas.</small>
             )}

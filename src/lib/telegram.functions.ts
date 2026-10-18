@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { verifyTelegramAuth, type TelegramAuthData } from "./telegram-verify";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 const telegramSchema = z
   .object({

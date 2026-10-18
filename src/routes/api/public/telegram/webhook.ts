@@ -27,7 +27,7 @@ async function sendMessage(botToken: string, chatId: number, text: string) {
   const res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ chat_id: chatId, text }),
+    body: JSON.stringify({ chat_id: chatId, text, parse_mode: "HTML" }),
   });
   if (!res.ok) console.error(`Telegram sendMessage failed [${res.status}]: ${await res.text()}`);
 }
@@ -75,7 +75,6 @@ export const Route = createFileRoute("/api/public/telegram/webhook")({
           chatId,
           `ASTRA’ga kirish kodingiz:\n\n<code>${code}</code>\n\nKod 10 daqiqa amal qiladi. Uni saytdagi kirish oynasiga kiriting.`,
         );
-        // Telegram needs HTML parse mode for <code>; resend plainly if it failed is overkill — use HTML:
         return Response.json({ ok: true });
       },
     },

@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as FanlarRouteImport } from './routes/fanlar'
 import { Route as AuthResetRouteImport } from './routes/auth_.reset'
 import { Route as FanSlugRouteImport } from './routes/fan.$slug'
+import { Route as ApiPublicTelegramWebhookRouteImport } from './routes/api/public/telegram/webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,12 @@ const FanSlugRoute = FanSlugRouteImport.update({
   path: '/fan/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicTelegramWebhookRoute =
+  ApiPublicTelegramWebhookRouteImport.update({
+    id: '/api/public/telegram/webhook',
+    path: '/api/public/telegram/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByFullPath {
   '/fanlar': typeof FanlarRoute
   '/auth/reset': typeof AuthResetRoute
   '/fan/$slug': typeof FanSlugRoute
+  '/api/public/telegram/webhook': typeof ApiPublicTelegramWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +70,7 @@ export interface FileRoutesByTo {
   '/fanlar': typeof FanlarRoute
   '/auth/reset': typeof AuthResetRoute
   '/fan/$slug': typeof FanSlugRoute
+  '/api/public/telegram/webhook': typeof ApiPublicTelegramWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,12 +80,27 @@ export interface FileRoutesById {
   '/fanlar': typeof FanlarRoute
   '/auth_/reset': typeof AuthResetRoute
   '/fan/$slug': typeof FanSlugRoute
+  '/api/public/telegram/webhook': typeof ApiPublicTelegramWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/auth' | '/fanlar' | '/auth/reset' | '/fan/$slug'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/fanlar'
+    | '/auth/reset'
+    | '/fan/$slug'
+    | '/api/public/telegram/webhook'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/auth' | '/fanlar' | '/auth/reset' | '/fan/$slug'
+  to:
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/fanlar'
+    | '/auth/reset'
+    | '/fan/$slug'
+    | '/api/public/telegram/webhook'
   id:
     | '__root__'
     | '/'
@@ -85,6 +109,7 @@ export interface FileRouteTypes {
     | '/fanlar'
     | '/auth_/reset'
     | '/fan/$slug'
+    | '/api/public/telegram/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -94,6 +119,7 @@ export interface RootRouteChildren {
   FanlarRoute: typeof FanlarRoute
   AuthResetRoute: typeof AuthResetRoute
   FanSlugRoute: typeof FanSlugRoute
+  ApiPublicTelegramWebhookRoute: typeof ApiPublicTelegramWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -140,6 +166,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FanSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/telegram/webhook': {
+      id: '/api/public/telegram/webhook'
+      path: '/api/public/telegram/webhook'
+      fullPath: '/api/public/telegram/webhook'
+      preLoaderRoute: typeof ApiPublicTelegramWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -150,6 +183,7 @@ const rootRouteChildren: RootRouteChildren = {
   FanlarRoute: FanlarRoute,
   AuthResetRoute: AuthResetRoute,
   FanSlugRoute: FanSlugRoute,
+  ApiPublicTelegramWebhookRoute: ApiPublicTelegramWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

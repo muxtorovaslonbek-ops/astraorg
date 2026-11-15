@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Volume2, VolumeX, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import introVideo from '@/assets/astra-intro.mp4.asset.json';
-import introWebm from '@/assets/astra-intro.webm.asset.json';
 import introCosmos from '@/assets/intro-cosmos.jpg';
 import { StarField } from '@/components/star-field';
 
@@ -48,8 +46,8 @@ export function Intro({ onClose }: { onClose: () => void }) {
       }}>
       <video ref={video} className="intro-video" playsInline preload="auto" muted={muted}
         onEnded={onClose} onError={() => { setFailed(true); setPlaying(false); }}>
-        <source src={introWebm.url} type="video/webm" />
-        <source src={introVideo.url} type="video/mp4" />
+        <source src="/intro/astra-intro.webm" type="video/webm" />
+        <source src="/intro/astra-intro.mp4" type="video/mp4" />
       </video>
       <div className="intro-top">
         <span className="eyebrow">ASTRA</span>
